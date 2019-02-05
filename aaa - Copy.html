@@ -1,0 +1,823 @@
+<html>
+<head>
+<title>Road2Science game</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<style>
+
+#tweets {
+border-collapse: collapse;
+width:100%;
+padding: 9px 12px;
+font-family: "Segoe UI",Arial,sans-serif;
+border: 0px;
+}
+
+#tweets	td {vertical-align: top;}
+
+#tweets	th, td { border-bottom: 1px solid #e6ecf0;}
+
+.avatar {
+	width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border-radius: 50%;
+	margin-right:5px;
+}
+
+.heshtag {
+color: #1DA1F2;
+}
+
+
+
+
+
+.main_img {
+	position: absolute;
+	z-index: 1;
+
+}
+
+.feedback_img {
+	position: absolute;
+	z-index: 3;
+}
+.build_choice {
+	position:relative;
+	float:left;
+	display:inline-block;
+	margin:10px;
+	padding:10px;
+	background-color:#fcfcc1;
+	border-radius: 10px;
+	border: 2px solid #9f900b;
+	min-width:10vw;}
+
+.build_choice img {
+	float: left;
+	margin-right:3px;}
+
+.sizeS {height:11vw;
+	width:11vw;}
+
+.sizeM {height:5vw;
+	width:5vw;}
+
+.amount {
+	position:relative;
+	left:-1vw;
+	top:-4vw;
+	padding:5px;
+	background-color:#880015;
+	display:inline-block;
+	border-radius: 50%;
+    font-weight: bold;
+    color: white;
+	width:18px;
+	height:18px;
+	text-align: center;
+	display:none;}
+
+.border {
+	border:2px solid red;}
+
+#build {
+	position:absolute;
+	top:10vh;
+	left:10vw;
+	width:80vw;
+	background-color: white;
+	padding: 10px;
+	border: 2px solid black;
+	z-index: 90;}
+
+#TweetsDIV {
+	border:5px solid #48AAE6;
+	overflow-y: scroll;
+	height:400px;
+	padding:10px;}
+
+#TweetsDIV h2 {
+	font-family: "Segoe UI",Arial,sans-serif;
+	color:white;
+	background-color:#48AAE6;
+	margin: -10px;
+    margin-bottom: 20px;
+	padding:10px;	}
+
+#saving_form {
+	position:fixed;
+	top:20vh;
+	left:20vw;
+	width:60vw;
+	background-color: white;
+	padding: 10px;
+	border: 2px solid black;
+	z-index: 99;}
+
+/* Landscape */
+@media screen and (orientation:landscape) {
+
+	#playfield {
+		height:80vh;
+		width:80vh;
+		margin-left: calc(40vw - 40vh);}
+
+	#finish_button {
+		position: absolute;
+		right: 2vh;
+		bottom: 2vh;}
+
+	#help_button {
+		position: absolute;
+		right: 2vh;
+		bottom: 15vh;}
+
+	#build_button {
+		position: absolute;
+		right: 2vh;
+		bottom: 28vh;}
+
+	#cell_discription {
+		position: absolute;
+		right: 2vh;
+		top: 2vh;
+		height: 55vh;
+		width: 20vh;}
+
+	#help_button img, #build_button img, #finish_button img{
+		height:10vh;
+		width:10vh;}
+
+	#help {
+		position:absolute;
+		top:10vh;
+		left:15vw;
+		width:70vw;
+		background-color: white;
+		padding: 10px;
+		border: 2px solid black;
+		z-index: 99;
+		}
+
+		#CommentsDIV,#TweetsDIV {
+    border: 1px solid white;
+    float: left;
+	width: 48vw;
+	}
+	
+	
+
+	
+
+}
+
+/* Portrait */
+@media screen and (orientation:portrait) {
+   .size {
+		
+		width:7.8vw;}
+
+	#playfield {
+		height:80vw;
+		width:80vw;
+		margin: 0 auto;
+		}
+
+	#finish_button {
+		position: absolute;
+		right: 2vw;
+		bottom: 2vw;}
+
+	#help_button {
+		position: absolute;
+		right: 15vw;
+		bottom: 2vw;}
+
+	#build_button {
+		position: absolute;
+		right: 28vw;
+		bottom: 2vw;}
+
+	#cell_discription {
+		position: absolute;
+		left: 2vw;
+		bottom: 2vw;
+		height: 20vw;
+		width: 55vw;}
+
+	#help_button img, #build_button img, #finish_button img{
+		height:10vw;
+		width:10vw;}
+
+	#help{
+	position:absolute;
+	top:10vh;
+	left:10vw;
+	width:80vw;
+	background-color: white;
+	padding: 10px;
+	border: 2px solid black;
+	z-index: 99;}
+	
+	
+
+
+}
+
+   .size {
+		
+		width:108px;
+		height:156px;
+		}
+		
+.col0 {top: 558px;  z-index: 1;}
+.col1 {top: 527px;  z-index: 2;}
+.col2 {top: 496px;  z-index: 3;}
+.col3 {top: 465px;  z-index: 4;}
+.col4 {top: 434px;  z-index: 5;}
+.col5 {top: 403px;  z-index: 6;}
+.col6 {top: 372px;  z-index: 7;}
+.col7 {top: 341px;  z-index: 8;}
+.col8 {top: 310px;  z-index: 9;}
+.col9 {top: 279px;  z-index: 10;}
+.col10 {top: 248px;  z-index: 11;}
+.col11 {top: 217px;  z-index: 12;}
+.col12 {top: 186px;  z-index: 13;}
+.col13 {top: 155px;  z-index: 14;}
+.col14 {top: 124px;  z-index: 15;}
+.col15 {top: 93px;  z-index: 16;}
+.col16 {top: 62px;  z-index: 17;}
+.col17 {top: 31px;  z-index: 18;}
+.col18 {top: 0px;  z-index: 19;}
+
+
+
+
+.row0 {left: 0px;}
+.row1 {left: 54px;}
+.row2 {left: 108px;}
+.row3 {left: 162px;}
+.row4 {left: 216px;}
+.row5 {left: 270px;}
+.row6 {left: 324px;}
+.row7 {left: 378px;}
+.row8 {left: 432px;}
+.row9 {left: 486px;}
+.row10 {left: 540px;}
+.row11 {left: 594px;}
+.row12 {left: 648px;}
+.row13 {left: 702px;}
+.row14 {left: 756px;}
+.row15 {left: 810px;}
+.row16 {left: 864px;}
+.row17 {left: 918px;}
+.row18 {left: 972px;}
+.row19 {left: 1026px;}
+
+
+
+
+
+
+	#playfield {
+		height:714px;
+		width:1080px;
+		margin: 0 auto;		
+		background-color:red;
+		position:relative;		
+		}
+		
+.cell {
+position: absolute;
+	display:inline-block;
+	bottom:0;
+}		
+
+.main_img {
+	position: absolute;
+}
+
+</style>
+<script src="feedback.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+</head>
+
+<body style="background-color:#5fd35f;">
+<div id="playfield">
+	<div style="clear:both"></div>
+<div class="cell size row1 col10" id="field10"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row2 col9" id="field11"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row3 col8" id="field12"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row4 col7" id="field13"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row5 col6" id="field14"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row6 col5" id="field15"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row7 col4" id="field16"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row8 col3" id="field17"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row9 col2" id="field18"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row10 col1" id="field19"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row2 col11" id="field20"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row3 col10" id="field21"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row4 col9" id="field22"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row5 col8" id="field23"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row6 col7" id="field24"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row7 col6" id="field25"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row8 col5" id="field26"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row9 col4" id="field27"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row10 col3" id="field28"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row11 col2" id="field29"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row3 col12" id="field30"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row4 col11" id="field31"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row5 col10" id="field32"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row6 col9" id="field33"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row7 col8" id="field34"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row8 col7" id="field35"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row9 col6" id="field36"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row10 col5" id="field37"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row11 col4" id="field38"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row12 col3" id="field39"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row4 col13" id="field40"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row5 col12" id="field41"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row6 col11" id="field42"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row7 col10" id="field43"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row8 col9" id="field44"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row9 col8" id="field45"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row10 col7" id="field46"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row11 col6" id="field47"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row12 col5" id="field48"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row13 col4" id="field49"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row5 col14" id="field50"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row6 col13" id="field51"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row7 col12" id="field52"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row8 col11" id="field53"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row9 col10" id="field54"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row10 col9" id="field55"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row11 col8" id="field56"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row12 col7" id="field57"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row13 col6" id="field58"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row14 col5" id="field59"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row6 col15" id="field60"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row7 col14" id="field61"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row8 col13" id="field62"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row9 col12" id="field63"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row10 col11" id="field64"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row11 col10" id="field65"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row12 col9" id="field66"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row13 col8" id="field67"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row14 col7" id="field68"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row15 col6" id="field69"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row7 col16" id="field70"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row8 col15" id="field71"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row9 col14" id="field72"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row10 col13" id="field73"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row11 col12" id="field74"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row12 col11" id="field75"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row13 col10" id="field76"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row14 col9" id="field77"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row15 col8" id="field78"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row16 col7" id="field79"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row8 col17" id="field80"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row9 col16" id="field81"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row10 col15" id="field82"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row11 col14" id="field83"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row12 col13" id="field84"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row13 col12" id="field85"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row14 col11" id="field86"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row15 col10" id="field87"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row16 col9" id="field88"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row17 col8" id="field89"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row9 col18" id="field90"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row10 col17" id="field91"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row11 col16" id="field92"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row12 col15" id="field93"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row13 col14" id="field94"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row14 col13" id="field95"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row15 col12" id="field96"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row16 col11" id="field97"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row17 col10" id="field98"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row18 col9" id="field99"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row0 col9" id="field00"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row1 col8" id="field01"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row2 col7" id="field02"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row3 col6" id="field03"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row4 col5" id="field04"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row5 col4" id="field05"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row6 col3" id="field06"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row7 col2" id="field07"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row8 col1" id="field08"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+<div class="cell size row9 col0" id="field09"><img src="img\buildings-l\empty.png" class="size main_img"></div>
+
+
+
+
+<div id="finish_button" onclick="fill()">fill</div>
+<div id="help_button"  onclick="rotate('left')">left</div>
+<div id="build_button" onclick="rotate('right')">right</div>
+
+
+
+
+
+
+<img src="img/map.png" width="1230" height="722" alt="fields" usemap="#fieldsmap" style="position:absolute; z-index: 25">
+
+<map name="fieldsmap">
+<area shape="poly" coords="54,373,108,342,162,373,108,404" onclick="choose_field('field10')" >
+<area shape="poly" coords="108,404,162,373,216,404,162,435" onclick="choose_field('field11')" >
+<area shape="poly" coords="162,435,216,404,270,435,216,466" onclick="choose_field('field12')" >
+<area shape="poly" coords="216,466,270,435,324,466,270,497" onclick="choose_field('field13')" >
+<area shape="poly" coords="270,497,324,466,378,497,324,528" onclick="choose_field('field14')" >
+<area shape="poly" coords="324,528,378,497,432,528,378,559" onclick="choose_field('field15')" >
+<area shape="poly" coords="378,559,432,528,486,559,432,590" onclick="choose_field('field16')" >
+<area shape="poly" coords="432,590,486,559,540,590,486,621" onclick="choose_field('field17')" >
+<area shape="poly" coords="486,621,540,590,594,621,540,652" onclick="choose_field('field18')" >
+<area shape="poly" coords="540,652,594,621,648,652,594,683" onclick="choose_field('field19')" >
+<area shape="poly" coords="108,342,162,311,216,342,162,373" onclick="choose_field('field20')" >
+<area shape="poly" coords="162,373,216,342,270,373,216,404" onclick="choose_field('field21')" >
+<area shape="poly" coords="216,404,270,373,324,404,270,435" onclick="choose_field('field22')" >
+<area shape="poly" coords="270,435,324,404,378,435,324,466" onclick="choose_field('field23')" >
+<area shape="poly" coords="324,466,378,435,432,466,378,497" onclick="choose_field('field24')" >
+<area shape="poly" coords="378,497,432,466,486,497,432,528" onclick="choose_field('field25')" >
+<area shape="poly" coords="432,528,486,497,540,528,486,559" onclick="choose_field('field26')" >
+<area shape="poly" coords="486,559,540,528,594,559,540,590" onclick="choose_field('field27')" >
+<area shape="poly" coords="540,590,594,559,648,590,594,621" onclick="choose_field('field28')" >
+<area shape="poly" coords="594,621,648,590,702,621,648,652" onclick="choose_field('field29')" >
+<area shape="poly" coords="162,311,216,280,270,311,216,342" onclick="choose_field('field30')" >
+<area shape="poly" coords="216,342,270,311,324,342,270,373" onclick="choose_field('field31')" >
+<area shape="poly" coords="270,373,324,342,378,373,324,404" onclick="choose_field('field32')" >
+<area shape="poly" coords="324,404,378,373,432,404,378,435" onclick="choose_field('field33')" >
+<area shape="poly" coords="378,435,432,404,486,435,432,466" onclick="choose_field('field34')" >
+<area shape="poly" coords="432,466,486,435,540,466,486,497" onclick="choose_field('field35')" >
+<area shape="poly" coords="486,497,540,466,594,497,540,528" onclick="choose_field('field36')" >
+<area shape="poly" coords="540,528,594,497,648,528,594,559" onclick="choose_field('field37')" >
+<area shape="poly" coords="594,559,648,528,702,559,648,590" onclick="choose_field('field38')" >
+<area shape="poly" coords="648,590,702,559,756,590,702,621" onclick="choose_field('field39')" >
+<area shape="poly" coords="216,280,270,249,324,280,270,311" onclick="choose_field('field40')" >
+<area shape="poly" coords="270,311,324,280,378,311,324,342" onclick="choose_field('field41')" >
+<area shape="poly" coords="324,342,378,311,432,342,378,373" onclick="choose_field('field42')" >
+<area shape="poly" coords="378,373,432,342,486,373,432,404" onclick="choose_field('field43')" >
+<area shape="poly" coords="432,404,486,373,540,404,486,435" onclick="choose_field('field44')" >
+<area shape="poly" coords="486,435,540,404,594,435,540,466" onclick="choose_field('field45')" >
+<area shape="poly" coords="540,466,594,435,648,466,594,497" onclick="choose_field('field46')" >
+<area shape="poly" coords="594,497,648,466,702,497,648,528" onclick="choose_field('field47')" >
+<area shape="poly" coords="648,528,702,497,756,528,702,559" onclick="choose_field('field48')" >
+<area shape="poly" coords="702,559,756,528,810,559,756,590" onclick="choose_field('field49')" >
+<area shape="poly" coords="270,249,324,218,378,249,324,280" onclick="choose_field('field50')" >
+<area shape="poly" coords="324,280,378,249,432,280,378,311" onclick="choose_field('field51')" >
+<area shape="poly" coords="378,311,432,280,486,311,432,342" onclick="choose_field('field52')" >
+<area shape="poly" coords="432,342,486,311,540,342,486,373" onclick="choose_field('field53')" >
+<area shape="poly" coords="486,373,540,342,594,373,540,404" onclick="choose_field('field54')" >
+<area shape="poly" coords="540,404,594,373,648,404,594,435" onclick="choose_field('field55')" >
+<area shape="poly" coords="594,435,648,404,702,435,648,466" onclick="choose_field('field56')" >
+<area shape="poly" coords="648,466,702,435,756,466,702,497" onclick="choose_field('field57')" >
+<area shape="poly" coords="702,497,756,466,810,497,756,528" onclick="choose_field('field58')" >
+<area shape="poly" coords="756,528,810,497,864,528,810,559" onclick="choose_field('field59')" >
+<area shape="poly" coords="324,218,378,187,432,218,378,249" onclick="choose_field('field60')" >
+<area shape="poly" coords="378,249,432,218,486,249,432,280" onclick="choose_field('field61')" >
+<area shape="poly" coords="432,280,486,249,540,280,486,311" onclick="choose_field('field62')" >
+<area shape="poly" coords="486,311,540,280,594,311,540,342" onclick="choose_field('field63')" >
+<area shape="poly" coords="540,342,594,311,648,342,594,373" onclick="choose_field('field64')" >
+<area shape="poly" coords="594,373,648,342,702,373,648,404" onclick="choose_field('field65')" >
+<area shape="poly" coords="648,404,702,373,756,404,702,435" onclick="choose_field('field66')" >
+<area shape="poly" coords="702,435,756,404,810,435,756,466" onclick="choose_field('field67')" >
+<area shape="poly" coords="756,466,810,435,864,466,810,497" onclick="choose_field('field68')" >
+<area shape="poly" coords="810,497,864,466,918,497,864,528" onclick="choose_field('field69')" >
+<area shape="poly" coords="378,187,432,156,486,187,432,218" onclick="choose_field('field70')" >
+<area shape="poly" coords="432,218,486,187,540,218,486,249" onclick="choose_field('field71')" >
+<area shape="poly" coords="486,249,540,218,594,249,540,280" onclick="choose_field('field72')" >
+<area shape="poly" coords="540,280,594,249,648,280,594,311" onclick="choose_field('field73')" >
+<area shape="poly" coords="594,311,648,280,702,311,648,342" onclick="choose_field('field74')" >
+<area shape="poly" coords="648,342,702,311,756,342,702,373" onclick="choose_field('field75')" >
+<area shape="poly" coords="702,373,756,342,810,373,756,404" onclick="choose_field('field76')" >
+<area shape="poly" coords="756,404,810,373,864,404,810,435" onclick="choose_field('field77')" >
+<area shape="poly" coords="810,435,864,404,918,435,864,466" onclick="choose_field('field78')" >
+<area shape="poly" coords="864,466,918,435,972,466,918,497" onclick="choose_field('field79')" >
+<area shape="poly" coords="432,156,486,125,540,156,486,187" onclick="choose_field('field80')" >
+<area shape="poly" coords="486,187,540,156,594,187,540,218" onclick="choose_field('field81')" >
+<area shape="poly" coords="540,218,594,187,648,218,594,249" onclick="choose_field('field82')" >
+<area shape="poly" coords="594,249,648,218,702,249,648,280" onclick="choose_field('field83')" >
+<area shape="poly" coords="648,280,702,249,756,280,702,311" onclick="choose_field('field84')" >
+<area shape="poly" coords="702,311,756,280,810,311,756,342" onclick="choose_field('field85')" >
+<area shape="poly" coords="756,342,810,311,864,342,810,373" onclick="choose_field('field86')" >
+<area shape="poly" coords="810,373,864,342,918,373,864,404" onclick="choose_field('field87')" >
+<area shape="poly" coords="864,404,918,373,972,404,918,435" onclick="choose_field('field88')" >
+<area shape="poly" coords="918,435,972,404,1026,435,972,466" onclick="choose_field('field89')" >
+<area shape="poly" coords="486,125,540,94,594,125,540,156" onclick="choose_field('field90')" >
+<area shape="poly" coords="540,156,594,125,648,156,594,187" onclick="choose_field('field91')" >
+<area shape="poly" coords="594,187,648,156,702,187,648,218" onclick="choose_field('field92')" >
+<area shape="poly" coords="648,218,702,187,756,218,702,249" onclick="choose_field('field93')" >
+<area shape="poly" coords="702,249,756,218,810,249,756,280" onclick="choose_field('field94')" >
+<area shape="poly" coords="756,280,810,249,864,280,810,311" onclick="choose_field('field95')" >
+<area shape="poly" coords="810,311,864,280,918,311,864,342" onclick="choose_field('field96')" >
+<area shape="poly" coords="864,342,918,311,972,342,918,373" onclick="choose_field('field97')" >
+<area shape="poly" coords="918,373,972,342,1026,373,972,404" onclick="choose_field('field98')" >
+<area shape="poly" coords="972,404,1026,373,1080,404,1026,435" onclick="choose_field('field99')" >
+<area shape="poly" coords="0,404,54,373,108,404,54,435" onclick="choose_field('field00')" >
+<area shape="poly" coords="54,435,108,404,162,435,108,466" onclick="choose_field('field01')" >
+<area shape="poly" coords="108,466,162,435,216,466,162,497" onclick="choose_field('field02')" >
+<area shape="poly" coords="162,497,216,466,270,497,216,528" onclick="choose_field('field03')" >
+<area shape="poly" coords="216,528,270,497,324,528,270,559" onclick="choose_field('field04')" >
+<area shape="poly" coords="270,559,324,528,378,559,324,590" onclick="choose_field('field05')" >
+<area shape="poly" coords="324,590,378,559,432,590,378,621" onclick="choose_field('field06')" >
+<area shape="poly" coords="378,621,432,590,486,621,432,652" onclick="choose_field('field07')" >
+<area shape="poly" coords="432,652,486,621,540,652,486,683" onclick="choose_field('field08')" >
+<area shape="poly" coords="486,683,540,652,594,683,540,714" onclick="choose_field('field09')" >
+
+
+
+
+</map>	
+	<div style="clear:both"></div>
+</div>
+
+
+
+<script>
+
+var options=[99,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+	fields = [],
+	rows=10,
+	homes=[],
+	companies=[],
+	active_cell = document.createElement("p"),
+	position=0,
+	fields_disc=[
+		["Tomt fält", "Det finns ingenting här"],
+		["Väg", "Väg förbinder objekt tillsammans"],
+		["Väg", "Väg förbinder objekt tillsammans"],
+		["Väg", "Väg förbinder objekt tillsammans"],
+		["Väg", "Väg förbinder objekt tillsammans"],
+		["Väg", "Väg förbinder objekt tillsammans"],
+		["Väg", "Väg förbinder objekt tillsammans"],
+		["Väg", "Väg förbinder objekt tillsammans"],
+		["Väg", "Väg förbinder objekt tillsammans"],
+		["Väg", "Väg förbinder objekt tillsammans"],
+		["Väg", "Väg förbinder objekt tillsammans"],
+		["Väg", "Väg förbinder objekt tillsammans"],
+		["Villaområde", "Privata bostäder för 500 personer. Människor som bor i villaområden brukar vara mer sociala"],
+		["Radhusområde", "Ger bostäder till 1500 personer"],
+		["Lägenhetsområde", "Ger bostäder till 5000 personer. Förbrukar mer energy och en större del av stadens budget"],
+		["Fabrik", "Fabriken ger jobb till 7000 personer. Förbrukar mer energi än kontor men ger en större ekonomisk vinst"],
+		["Kontorsbyggnader", "Ger job till 7000 personer. Lite mer socialt än en fabrik"],
+		["Park", "Plats där upp till 10 000 personer kan slappna av och njuta av naturen"],
+		["Kasino", "Underhållning för vuxna som ger glädje till upp till 10 000 personer. Förbrukar mer energi men ger extra pengar till staden"],
+		["Museum", "Lärorikt och social underhållande för upp till 10 000 personer"],
+		["Kolkraftverk", "Genererar tillräckligt med energi för hela staden. Ger en negativ effekt på miljön"],
+		["Vindkraftverk", "Producerar energi till halva staden"],
+		["Kärnkraftverk", "Genererar energi till hela staden men ger obehag till stadens befolkning"],
+		["Förskola", "Plats att leka och lära för 2500 barn"],
+		["Skola", "Ger utbildning till 12000 studenter"],
+		["Högskola", "Kan ge en högre utbildning till alla studenter i staden"],
+		["Brandstation", "Ser till att 100 000 personer är säkra"],
+		["Polis", "Arbetar bäst i områden med mindre än 100 000 personer"],
+		["Sjukhus", "Kan vårda 50 000 personer"]
+	];
+
+
+for ( var y = 0; y < (rows+2); y++ ) { //for calculation purposes I need 0 and row+1
+    fields[ y ] = [];
+	for ( var x = 0; x < (rows+2); x++ ) {
+		fields[ y ][x] = [0,0,0,0,0,100];
+	}
+}
+
+/*	fields[][][0] = [];//type
+	fields[][][1] = [];//traffic
+	fields[][][2] = [];//surroundings
+	fields[][][3] = [];//pollution
+	fields[][][4] = [];//connection to road
+	fields[][][5] = [];//happiness
+
+	for companies it is only if there are enought people to work and I know coordinates of companies from array comapnies.
+*/
+
+function open_help() {
+	document.getElementById("help").style.display = "block";
+}
+
+function close_help() {
+	document.getElementById("help").style.display = "none";
+}
+
+
+//temp
+for ( var y = 1; y <= rows; y++ ) {    
+	for ( var x = 1; x <= rows; x++ ) {
+	fields[y][x][0]=Math.floor(Math.random() * 29);
+	}	
+}
+
+
+
+function choose_field(field) {
+
+
+	var temp_field;
+alert (field);
+	/*if (active_cell.id.length!=0) {
+	active_cell.childNodes[1].innerHTML="";
+	}
+	active_cell=field;
+	alert (active_cell.id);
+	active_cell.childNodes[1].innerHTML="<img src=\"img/select.png\" class=\"size feedback_img\">";
+	temp_field=fields[(parseInt(field.id.charAt(5))+1)][(parseInt(field.id.charAt(6))+1)][0];
+	document.getElementById("cell_discription").innerHTML="<h3>"+ fields_disc[temp_field][0]+"</h3><p>"+ fields_disc[temp_field][1]+"</p>";
+	*/
+}
+
+
+function fill () {
+var img_src;
+//alert (position);
+
+for ( var y = 1; y <= rows; y++ ) {    
+	for ( var x = 1; x <= rows; x++ ) {
+	
+	switch(position) {
+		case 0:	
+			switch(fields[y][x][0]) {
+				case 0:  img_src="img/empty.png";  break;
+				case 1:  img_src="img/roadH.png";  break;
+				case 2:  img_src="img/roadV.png";  break;
+				case 3:  img_src="img/roadC.png";  break;
+				case 4:  img_src="img/road1.png";  break;
+				case 5:  img_src="img/road2.png";  break;
+				case 6:  img_src="img/road3.png";  break;
+				case 7:  img_src="img/road4.png";  break;
+				case 8:  img_src="img/road5.png";  break;
+				case 9:  img_src="img/road6.png";  break;
+				case 10:  img_src="img/road7.png";  break;
+				case 11:  img_src="img/road8.png";  break;
+				case 12:  img_src="img/homes.png";  break;
+				case 13:  img_src="img/radhus.png";  break;
+				case 14:  img_src="img/lagenhet.png";  break;
+				case 15:  img_src="img/work.png";  break;
+				case 16:  img_src="img/office.png";  break;
+				case 17:  img_src="img/park.png";  break;
+				case 18:  img_src="img/casino.png";  break;
+				case 19:  img_src="img/museum.png";  break;
+				case 20:  img_src="img/coal.png";  break;
+				case 21:  img_src="img/windmill.png";  break;
+				case 22:  img_src="img/nuclear.png";  break;
+				case 23:  img_src="img/dagis.png";  break;
+				case 24:  img_src="img/skolan.png";  break;
+				case 25:  img_src="img/hogskolan.png";  break;
+				case 26:  img_src="img/brandstation.png";  break;
+				case 27:  img_src="img/polis.png";  break;
+				case 28:  img_src="img/sjukhus.png";  break;
+			}
+			break;
+		case 1:	
+			switch(fields[y][x][0]) {
+				case 0:  img_src="img/empty-r.png";  break;
+				case 1:  img_src="img/roadH-r.png";  break;
+				case 2:  img_src="img/roadV-r.png";  break;
+				case 3:  img_src="img/roadC-r.png";  break;
+				case 4:  img_src="img/road1-r.png";  break;
+				case 5:  img_src="img/road4-r.png";  break;
+				case 6:  img_src="img/road3-r.png";  break;
+				case 7:  img_src="img/road2-r.png";  break;
+				case 8:  img_src="img/road6-r.png";  break;
+				case 9:  img_src="img/road5-r.png";  break;
+				case 10:  img_src="img/road8-r.png";  break;
+				case 11:  img_src="img/road7-r.png";  break;
+				case 12:  img_src="img/homes-r.png";  break;
+				case 13:  img_src="img/radhus-r.png";  break;
+				case 14:  img_src="img/lagenhet-r.png";  break;
+				case 15:  img_src="img/work-r.png";  break;
+				case 16:  img_src="img/office-r.png";  break;
+				case 17:  img_src="img/park-r.png";  break;
+				case 18:  img_src="img/casino-r.png";  break;
+				case 19:  img_src="img/museum-r.png";  break;
+				case 20:  img_src="img/coal-r.png";  break;
+				case 21:  img_src="img/windmill-r.png";  break;
+				case 22:  img_src="img/nuclear-r.png";  break;
+				case 23:  img_src="img/dagis-r.png";  break;
+				case 24:  img_src="img/skolan-r.png";  break;
+				case 25:  img_src="img/hogskolan-r.png";  break;
+				case 26:  img_src="img/brandstation-r.png";  break;
+				case 27:  img_src="img/polis-r.png";  break;
+				case 28:  img_src="img/sjukhus-r.png";  break;
+			}
+			break;
+		case 2:	
+			switch(fields[y][x][0]) {
+				case 0:  img_src="img/empty.png";  break;
+				case 1:  img_src="img/roadH.png";  break;
+				case 2:  img_src="img/roadV.png";  break;
+				case 3:  img_src="img/roadC.png";  break;
+				case 4:  img_src="img/road3.png";  break;
+				case 5:  img_src="img/road4.png";  break;
+				case 6:  img_src="img/road1.png";  break;
+				case 7:  img_src="img/road2.png";  break;
+				case 8:  img_src="img/road7.png";  break;
+				case 9:  img_src="img/road8.png";  break;
+				case 10:  img_src="img/road5.png";  break;
+				case 11:  img_src="img/road6.png";  break;
+				case 12:  img_src="img/homes.png";  break;
+				case 13:  img_src="img/radhus.png";  break;
+				case 14:  img_src="img/lagenhet.png";  break;
+				case 15:  img_src="img/work.png";  break;
+				case 16:  img_src="img/office.png";  break;
+				case 17:  img_src="img/park.png";  break;
+				case 18:  img_src="img/casino.png";  break;
+				case 19:  img_src="img/museum.png";  break;
+				case 20:  img_src="img/coal.png";  break;
+				case 21:  img_src="img/windmill.png";  break;
+				case 22:  img_src="img/nuclear.png";  break;
+				case 23:  img_src="img/dagis.png";  break;
+				case 24:  img_src="img/skolan.png";  break;
+				case 25:  img_src="img/hogskolan.png";  break;
+				case 26:  img_src="img/brandstation.png";  break;
+				case 27:  img_src="img/polis.png";  break;
+				case 28:  img_src="img/sjukhus.png";  break;
+			}
+			break;
+		case 3:	
+			switch(fields[y][x][0]) {
+				case 0:  img_src="img/empty-r.png";  break;
+				case 1:  img_src="img/roadH-r.png";  break;
+				case 2:  img_src="img/roadV-r.png";  break;
+				case 3:  img_src="img/roadC-r.png";  break;
+				case 4:  img_src="img/road3-r.png";  break;
+				case 5:  img_src="img/road2-r.png";  break;
+				case 6:  img_src="img/road1-r.png";  break;
+				case 7:  img_src="img/road4-r.png";  break;
+				case 8:  img_src="img/road8-r.png";  break;
+				case 9:  img_src="img/road7-r.png";  break;
+				case 10:  img_src="img/road6-r.png";  break;
+				case 11:  img_src="img/road5-r.png";  break;
+				case 12:  img_src="img/homes-r.png";  break;
+				case 13:  img_src="img/radhus-r.png";  break;
+				case 14:  img_src="img/lagenhet-r.png";  break;
+				case 15:  img_src="img/work-r.png";  break;
+				case 16:  img_src="img/office-r.png";  break;
+				case 17:  img_src="img/park-r.png";  break;
+				case 18:  img_src="img/casino-r.png";  break;
+				case 19:  img_src="img/museum-r.png";  break;
+				case 20:  img_src="img/coal-r.png";  break;
+				case 21:  img_src="img/windmill-r.png";  break;
+				case 22:  img_src="img/nuclear-r.png";  break;
+				case 23:  img_src="img/dagis-r.png";  break;
+				case 24:  img_src="img/skolan-r.png";  break;
+				case 25:  img_src="img/hogskolan-r.png";  break;
+				case 26:  img_src="img/brandstation-r.png";  break;
+				case 27:  img_src="img/polis-r.png";  break;
+				case 28:  img_src="img/sjukhus-r.png";  break;
+			}
+			break;
+	}		
+	
+		 document.getElementById("field" + (y-1) + (x-1)).childNodes[0].src=img_src;
+	}	
+}}
+
+function rotate (dir) { // argument dir that shows what way is rotated
+
+var temparray=[];
+for ( var y = 0; y < (rows+2); y++ ) { //for calculation purposes I need 0 and row+1
+    temparray[y] = [];
+	for ( var x = 0; x < (rows+2); x++ ) {
+		temparray[y][x] = [fields[y][x][0]];
+		//temparray[x][y] = fields[x][y][0];
+	}
+}
+
+if (dir=="left") {
+	for ( var y = 1; y <=rows; y++ ) { //for calculation purposes I need 0 and row+1
+    	for ( var x = 1; x <=rows; x++ ) {
+			//fields[x][rows+1-y][0]=temparray[y][x][0];
+			fields[rows+1-x][y][0]=temparray[y][x][0];
+
+		}
+	}
+position--;	
+}
+
+if (dir=="right") {
+	for ( var y = 1; y <=rows; y++ ) { //for calculation purposes I need 0 and row+1
+    	for ( var x = 1; x <=rows; x++ ) {
+			fields[x][rows+1-y][0]=temparray[y][x][0];
+			//fields[rows+1-x][y][0]=temparray[y][x][0];
+
+		}
+	}
+position++;	
+}
+
+if (position==-1) position=1;
+if (position==4) position=0;
+
+
+fill();
+}
+
+
+
+</script>
+</body>
+</html>
+
+	
